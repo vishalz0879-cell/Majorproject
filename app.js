@@ -1,6 +1,7 @@
 const express=require("express");
 const app = express();
 const mongoose = require("mongoose");
+const Listing= require("./models/listing.js")
 
 main()
 .then(()=>{
@@ -16,6 +17,19 @@ async function main() {
 
 app.get("/",(req,res)=>{
     res.send("hii server is working")
+})
+
+app.get("/testListing",async (req,res)=>{
+    let sampleListing = new Listing({
+        title:"My New Villa",
+        description:"By the beach",
+        price:1200,
+        location:"calangut Goa",
+        country:"India",
+    })
+    await sampleListing.save();
+    console.log("sample was saved")
+    res.send("sucessfull testing");
 })
 
 app.listen(8080,()=>{
