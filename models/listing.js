@@ -9,6 +9,7 @@ const listingSchema = new Schema({
     description:String,
     image:{
         type:String,
+        default:"https://www.vecteezy.com/free-photos",
         set:(v)=>v ==="" ? "https://www.vecteezy.com/free-photos": v,
 
     },
@@ -20,4 +21,4 @@ const listingSchema = new Schema({
 });
 
 const Listing = mongoose.model("Listing",listingSchema);
-module.export = Listing;
+module.exports = Listing;
