@@ -7,12 +7,17 @@ const listingSchema = new Schema({
         required:true
     },
     description:String,
-    image:{
-        type:String,
-        default:"https://www.vecteezy.com/free-photos",
-        set:(v)=>v ==="" ? "https://www.vecteezy.com/free-photos": v,
-
-    },
+    image: {
+  filename: {
+    type: String,
+    default: "listingimage",
+  },
+  url: {
+    type: String,
+    default: "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?v=4",
+    set: (v) => v === "" ? "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?v=4" : v,
+  },
+},
 
     price:Number,
     location:String,
