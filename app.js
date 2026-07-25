@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing= require("./models/listing.js")
 const path=require("path");
+const methodOverride=require("method-override")
 
 main()
 .then(()=>{
@@ -19,6 +20,7 @@ async function main() {
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"))
 
 app.get("/",(req,res)=>{
     res.send("hii server is working")
@@ -44,26 +46,28 @@ app.get("/listings/:id",async (req,res)=>{
 })
 
 //create route
-aap.post("/listing",async (res,req)=>{
-    let {title,description,image,price,country,location}=req.body;
+app.post("/listings",async (req,res)=>{
+   const newListing= new Listing(req.body.listing);
+   await newListing.save();
+   res.redirect("/listing")
+})
+
+//edit route
+app.get("/listings/:id/edit",async (req,res)=>{
+     let {id}=req.params;
+    const listing =await Listing.findById(id);
+    res.render("listings/edits.ejs",{listing})
 
 })
 
+//update route
+app.put("/listings/:id",async (req,res)=>{
+    let {id}=req.params;
+    await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    res.redirect("/listing")
+})
 
 
-
-// app.get("/testListing",async (req,res)=>{
-//     let sampleListing = new Listing({
-//         title:"My New Villa",
-//         description:"By the beach",
-//         price:1200,
-//         location:"calangut Goa",
-//         country:"India",
-//     })
-//     await sampleListing.save();
-//     console.log("sample was saved")
-//     res.send("sucessfull testing");
-// })
 
 app.listen(8080,()=>{
     console.log("server is listening to port 8080");
