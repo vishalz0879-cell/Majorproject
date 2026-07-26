@@ -1,10 +1,11 @@
 <% layout("/layouts/boilerplate") %>
 <body>
-    <h3>Create a new post</h3>
-    <br><br>
+   <h3>Create a new post</h3>
+    
     <form method="post" action="/listings">
-      <div class="row">
+      <div class="row ">
         <div class="col-8 offset-2">
+             
         <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control">
@@ -16,7 +17,7 @@
          
         <div class="mb-3">
             <label for="image" class="form-label">Image Link</label>
-            <input name="listing[image]" placeholder="enter image url/link" type="text" class="form-control">
+            <input nmae="listing[image]" placeholder="Enter image url/link"  type="text" class="form-control">
         </div>
          <div class="row">
              <div class="mb-3 col-4">

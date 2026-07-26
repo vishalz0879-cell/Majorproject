@@ -85,4 +85,10 @@ body{
 
 .add-btn{
     background-color:rgb(7, 7, 157) !important;
+    border: none !important;
+}
+
+.edit-btn{
+     background-color:rgb(7, 7, 157) !important;
+     border: none !important;
 }
