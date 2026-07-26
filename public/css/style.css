@@ -9,3 +9,33 @@
 .nav-link{
     color: #222222 !important;
 }
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+    
+}
+.f-info-links{
+    width: 100%;
+}
+
+.f-info-socials{
+    font-size: 1.2rem;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.f-info{
+    text-align: center;
+    display: flex;
+    height: 5rem;
+    background-color: rgb(195, 190, 190) ;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+
+}
