@@ -12,6 +12,8 @@ const Review=require("./models/review.js");
 const{reviewSchema}=require("./Schema.js");
 const { wrap } = require("module");
 const wrapAsyc = require("./utils/wrapAsyc.js");
+const session =require("express-session");
+const flash=require("connect-flash")
 
 
 
@@ -38,21 +40,30 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-app.get("/",(req,res)=>{
-    res.send("hii server is working")
-})
-
-
-const validateReview=(req,res,next)=>{
-    let {error}= reviewSchema.validate(req.body);
-      if(error){
-        let errMsg=error.details.map((el)=>el.message).join(",");
-        throw new ExpressError(400,errMsg);
-    }
-    else{
-        next();
+const sessionOptions={
+    secret:"mysupersecretcode",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expires:Date.now()+7*24*60*60*1000,
+        maxAge:7*24*60*60*1000,
+        httpOnly:true,
     }
 }
+
+
+
+app.get("/",(req,res)=>{
+    res.send("hii server is working")
+});
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.success=req.flash("success");
+    next();
+})
 
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews);

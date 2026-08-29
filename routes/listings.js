@@ -39,7 +39,8 @@ router.get("/:id",WrapAsync( async (req,res)=>{
 router.post("/",validateListing, WrapAsync(async(req,res,next)=>{
     const newListing = new Listing(req.body.listing);
     await newListing.save();
-    res.redirect("/listing")
+    req.flash("success","New listing Created")
+    res.redirect("/listings")
 } ))
 
 //edit route
@@ -51,10 +52,10 @@ router.get("/:id/edit",WrapAsync( async (req,res)=>{
 }))
 
 //update route
-router.put(":id",validateListing,WrapAsync( async (req,res)=>{
+router.put("/:id",validateListing,WrapAsync( async (req,res)=>{
     let {id}=req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
-    res.redirect("/listing")
+    res.redirect("/listings")
 }))
 
 //delete route
@@ -62,7 +63,8 @@ router.delete("/:id",WrapAsync( async (req,res)=>{
     let {id}=req.params;
     let deletedListing= await  Listing.findByIdAndDelete(id);
     console.log(deletedListing)
-    res.redirect("/listing");
+    req.flash("success","Listing is deleted");
+    res.redirect("/listings");
 } ))
 
 
