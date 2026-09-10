@@ -19,28 +19,26 @@ const validateListing=(req,res,next)=>{
     }
 }
 
+router.route("/")
 //index route
-router.get("/",WrapAsync(listingController.index));
+.get(WrapAsync(listingController.index))
+//create route
+.post(isLoggedIn,validateListing, WrapAsync(listingController.createListing ));
+
 
 //new route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
-//show route
-router.get("/:id",WrapAsync( listingController.showListing));
 
-//create route
-router.post("/", isLoggedIn,validateListing, WrapAsync(listingController.createListing ));
+router.route("/:id")
+//show route
+.get(WrapAsync( listingController.showListing))
+//update route
+.put(isLoggedIn,validateListing,WrapAsync(listingController.UpdateListing))
+//delete route
+.delete(isLoggedIn,WrapAsync(listingController.DelteListing ));
 
 //edit route
 router.get("/:id/edit",isLoggedIn,WrapAsync(listingController.editListing))
-
-//update route
-router.put("/:id",isLoggedIn,validateListing,WrapAsync(listingController.UpdateListing))
-
-//delete route
-router.delete("/:id",isLoggedIn,WrapAsync(listingController.DelteListing ));
-
-
-
 
 module.exports=router;
